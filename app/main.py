@@ -43,7 +43,7 @@ async def get_deeplinks(
 @app.put("/deeplinks/random", response_model=DeeplinkResponse)
 async def update_random_deeplink(db: AsyncSession = Depends(get_db)):
     # 랜덤으로 하나의 레코드 선택
-    query = select(database.Deeplink).order_by(func.rand()).limit(1)
+    query = select(database.Deeplink).filter(database.Deeplink.id == random.randint(1, 127862393)).limit(1)
     result = await db.execute(query)
     deeplink = result.scalar_one_or_none()
     
@@ -70,7 +70,7 @@ async def get_random_deeplink_with_lock(db: AsyncSession):
     # FOR UPDATE와 함께 랜덤 레코드 선택
     query = (
         select(database.Deeplink)
-        .order_by(func.rand())
+        .filter(database.Deeplink.id == random.randint(1, 127862393))
         .limit(1)
         .with_for_update()
     )
