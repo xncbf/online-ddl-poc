@@ -1,4 +1,13 @@
-.PHONY: run
+migrate:
+	@echo "마이그레이션을 시작합니다..."
+	@docker build -t my-flyway .
+	@docker run --rm --env-file .env my-flyway -configFiles=/flyway/conf/flyway.conf -X migrate
+	@echo "마이그레이션이 완료되었습니다."
+
+baseline:
+	@echo "Baseline을 시작합니다..."
+	@docker run --rm --env-file .env my-flyway -configFiles=/flyway/conf/flyway.conf -X baseline
+	@echo "Baseline이 완료되었습니다."
 
 run:
 	@echo "Stopping any running Uvicorn and Locust processes..."
