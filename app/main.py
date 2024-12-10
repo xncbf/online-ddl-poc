@@ -1,3 +1,4 @@
+import asyncio
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, update, text
@@ -87,6 +88,9 @@ async def update_random_deeplink_with_lock(db: AsyncSession = Depends(get_db)):
         if not deeplink:
             raise HTTPException(status_code=404, detail="No deeplinks found")
         
+        # 1초 슬립
+        await asyncio.sleep(1)
+        
         # 새로운 랜덤 app_id 생성
         new_app_id = random.randint(1, 127862393)
         
@@ -100,4 +104,4 @@ async def update_random_deeplink_with_lock(db: AsyncSession = Depends(get_db)):
         
         # 업데이트된 레코드 반환
         deeplink.app_id = new_app_id
-        return deeplink 
+        return deeplink

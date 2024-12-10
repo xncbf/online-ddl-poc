@@ -7,7 +7,7 @@ from .config import settings
 # 비동기 엔진 생성
 engine = create_async_engine(
     f"mysql+aiomysql://{settings.DB_USER}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}",
-    pool_size=5,
+    pool_size=15,
     max_overflow=10,
     pool_timeout=30,
     pool_recycle=1800,

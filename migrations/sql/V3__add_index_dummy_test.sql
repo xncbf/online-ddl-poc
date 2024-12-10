@@ -1,0 +1,1 @@
+CREATE INDEX idx_dummy_test ON tbl_sl_deeplink_params(dummy_test); 
